@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 
 export default function SmartSearch({ onResults }) {
     const [query, setQuery] = useState("");
-
+    const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:4001";
+    const API_URL  = `${API_BASE}/api/search/nlp`;
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-          const res = await fetch("http://localhost:4001/api/search/nlp", {
+          const res = await fetch(API_URL, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ query }),
@@ -26,7 +27,7 @@ export default function SmartSearch({ onResults }) {
           onResults(body);
       } catch (err) {
           console.error("Network error:", err);
-          toast.error("Network error");
+          toast.error("Network error " + API_URL);
       }
     };
 
