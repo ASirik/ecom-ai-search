@@ -1,0 +1,30 @@
+# docker-compose.yml
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    env_file:
+      - ./api/.env             
+    ports:
+      - "4001:4001"
+    networks:
+      - backend
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api                      
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - HOST=0.0.0.0
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

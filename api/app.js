@@ -1,4 +1,5 @@
 const express = require('express');
+const cors    = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -10,11 +11,25 @@ const app = express();
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'backend/config/config.env' });
 }
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://prod.com'
+]
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}))
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use('/api/search', require('./routes/searchRoute'));
 
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');

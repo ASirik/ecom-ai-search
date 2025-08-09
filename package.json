@@ -33,6 +33,7 @@
     "mongoose": "^5.11.8",
     "mongoose-url-slugs": "^1.0.2",
     "nth-check": "^2.1.1",
+    "openai": "^5.12.1",
     "paytmchecksum": "^1.5.1",
     "perfect-scrollbar": "1.5.1",
     "prop-types": "15.7.2",

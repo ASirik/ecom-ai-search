@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    env_file:
+      - ./api/.env
+    ports:
+      - "4001:4001"
+    volumes:
+      - ./api:/usr/src/app       
+      - /usr/src/app/node_modules  
+    command: npm run dev         
